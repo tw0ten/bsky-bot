@@ -1,0 +1,6 @@
+#!/bin/sh
+cd io
+
+cp -u i/secre.ts o
+
+deno task run

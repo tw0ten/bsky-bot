@@ -1,9 +1,9 @@
 {
-  "tasks": {
-    "run": "deno run src/main.ts",
-    "dev": "deno run --watch src/main.ts"
-  },
-  "imports": {
-    "@atproto/api": "npm:@atproto/api@*"
-  }
+	"tasks": {
+		"run": "deno run --allow-net src/main.ts",
+		"dev": "deno run --watch src/main.ts"
+	},
+	"imports": {
+		"@atproto/api": "npm:@atproto/api@*"
+	}
 }
