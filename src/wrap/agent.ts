@@ -1,15 +1,15 @@
 import { Agent, AppBskyFeedPost, Facet, RichText } from "@atproto/api";
 
 export default class {
-	private instance: Agent;
-
-	did: string;
+	instance: Agent;
+	did;
 
 	constructor(instance: Agent) {
 		this.instance = instance;
 		this.did = this.instance.did!;
-		console.log(this.did);
 	}
+
+	profile = () => this.instance.getProfile({ actor: this.did });
 
 	private upload = (data: string | Uint8Array) => {
 		return this.instance.uploadBlob(
@@ -19,7 +19,7 @@ export default class {
 
 	post = async (
 		{
-			date = new Date("9999-12-31T23:59:59.999999999Z"),
+			date = new Date(),
 			text = "",
 			facets = undefined,
 			langs = undefined,
@@ -31,7 +31,7 @@ export default class {
 			langs?: string[];
 			tags?: string[];
 			date?: Date;
-			embed?: Uint8Array;
+			embed?: undefined;
 		} = {},
 	): Promise<{
 		uri: string;
@@ -43,8 +43,6 @@ export default class {
 		});
 		if (!facets) await rt.detectFacets(this.instance);
 
-		const img = await this.upload(embed!);
-
 		const data: AppBskyFeedPost.Record = {
 			createdAt: date.toISOString(),
 			text: rt.text,
@@ -52,25 +50,7 @@ export default class {
 			langs: langs,
 			tags: tags,
 			labels: undefined,
-			embed: {
-				$type: "app.bsky.embed.images",
-				images: [
-					{
-						alt: "My cat mittens",
-						image: img.data.blob,
-					},
-				],
-			},
-			/*reply: {
-				root: {
-					uri: "at://did:plc:u5cwb2mwiv2bfq53cjufe6yn/app.bsky.feed.post/3k43tv4rft22g",
-					cid: "bafyreig2fjxi3rptqdgylg7e5hmjl6mcke7rn2b6cugzlqq3i4zu6rq52q",
-				},
-				parent: {
-					uri: "at://did:plc:u5cwb2mwiv2bfq53cjufe6yn/app.bsky.feed.post/3k43tv4rft22g",
-					cid: "bafyreig2fjxi3rptqdgylg7e5hmjl6mcke7rn2b6cugzlqq3i4zu6rq52q",
-				},
-			},*/
+			embed: undefined,
 		};
 
 		console.log("post\n", data);

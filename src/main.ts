@@ -1,12 +1,27 @@
 import secrets from "../io/o/secre.ts";
 import { Agent, CredentialSession } from "@atproto/api";
 
-const credentials = new CredentialSession(new URL(secrets.bluesky.service));
-await credentials.login({
-	identifier: secrets.bluesky.identifier,
-	password: secrets.bluesky.password,
-});
+console.log("main");
 
-await (import("./bot.ts").then((m) => m.default(new Agent(credentials))));
+{
+	const credentials = new CredentialSession(new URL(secrets.bluesky.service));
+	console.log("login");
+	await credentials.login({
+		identifier: secrets.bluesky.identifier,
+		password: secrets.bluesky.password,
+	});
+	console.log(`${credentials.did}@${credentials.serviceUrl.href}`);
 
-await credentials.logout();
+	try {
+		await (import("./bot.ts").then((m) =>
+			m.default(new Agent(credentials))
+		));
+	} catch (e) {
+		console.error(e);
+	}
+
+	await credentials.logout();
+	console.log("logout");
+}
+
+console.log("stop");
