@@ -1,12 +1,8 @@
-import { Agent } from "@atproto/api";
+import Agent from "./wrap/agent.ts";
+import * as api from "@atproto/api";
 
-export default async (agent: Agent) => {
-	const post = async (text = "") => {
-		await agent.post({
-			text: `auto\n${text}`,
-		});
-	};
+export default async (agent: api.Agent) => await main(new Agent(agent));
 
-	return;
-	await post("test");
+const main = async (agent: Agent) => {
+	await agent.post({ embed: await Deno.readFile("./io/o/cat.png") });
 };

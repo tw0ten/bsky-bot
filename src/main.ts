@@ -7,10 +7,6 @@ await credentials.login({
 	password: secrets.bluesky.password,
 });
 
-const agent = new Agent(credentials);
-console.log(agent.assertDid);
+await (import("./bot.ts").then((m) => m.default(new Agent(credentials))));
 
-import("./bot.ts").then(async (m) => {
-	await m.default(agent);
-	credentials.logout();
-});
+await credentials.logout();
