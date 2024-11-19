@@ -12,9 +12,7 @@ export default class {
 	profile = () => this.instance.getProfile({ actor: this.did });
 
 	private upload = (data: string | Uint8Array) => {
-		return this.instance.uploadBlob(
-			data,
-		);
+		return this.instance.uploadBlob(data);
 	};
 
 	post = async (

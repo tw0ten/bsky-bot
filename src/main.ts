@@ -10,18 +10,16 @@ console.log("main");
 		identifier: secrets.bluesky.identifier,
 		password: secrets.bluesky.password,
 	});
-	console.log(`${credentials.did}@${credentials.serviceUrl.href}`);
+	console.log(`${credentials.did}@${credentials.serviceUrl.host}`);
 
 	try {
-		await (import("./bot.ts").then((m) =>
-			m.default(new Agent(credentials))
-		));
+		await (import("./bot.ts").then((m) => m.default(new Agent(credentials))));
 	} catch (e) {
 		console.error(e);
 	}
 
-	await credentials.logout();
 	console.log("logout");
+	await credentials.logout();
 }
 
 console.log("stop");

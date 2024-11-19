@@ -1,7 +1,6 @@
 #!/bin/sh
 mkdir -p io/o
 cd io
-
 cp -u i/secre.ts o
 
 deno task run
