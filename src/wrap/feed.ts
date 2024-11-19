@@ -27,8 +27,12 @@ export default async (agent: Agent, url: string) => {
 };
 
 export const feedUrl = (appUrl: string) => {
-	return appUrl.replace(new RegExp(".*\\/profile\\/"), "at://").replace(
-		"/feed/",
-		"/app.bsky.feed.generator/",
-	);
+	return appUrl
+		.replace(
+			new RegExp(".*\\/profile\\/"),
+			"at://",
+		).replace(
+			"/feed/",
+			"/app.bsky.feed.generator/",
+		);
 };

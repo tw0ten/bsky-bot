@@ -3,7 +3,7 @@
 		"run": "deno run -A src/main.ts"
 	},
 	"imports": {
-		"@atproto/api": "npm:@atproto/api@*"
+		"@atproto/api": "npm:@atproto/api"
 	},
 	"fmt": {
 		"useTabs": true,

@@ -1,4 +1,12 @@
-import { Agent, AppBskyFeedPost, Facet, RichText } from "@atproto/api";
+import {
+	Agent,
+	AppBskyFeedPost,
+	ComAtprotoRepoStrongRef,
+	Facet,
+	RichText,
+} from "@atproto/api";
+
+type StrongRef = ComAtprotoRepoStrongRef.Main;
 
 export default class {
 	instance: Agent;
@@ -23,6 +31,7 @@ export default class {
 			langs = undefined,
 			tags = undefined,
 			embed = undefined,
+			reply = undefined,
 		}: {
 			text?: string;
 			facets?: Facet[];
@@ -30,6 +39,10 @@ export default class {
 			tags?: string[];
 			date?: Date;
 			embed?: undefined;
+			reply?: {
+				root: StrongRef;
+				parent: StrongRef;
+			};
 		} = {},
 	): Promise<{
 		uri: string;
@@ -45,10 +58,11 @@ export default class {
 			createdAt: date.toISOString(),
 			text: rt.text,
 			facets: rt.facets,
-			langs: langs,
-			tags: tags,
+			langs,
+			tags,
 			labels: undefined,
-			embed: undefined,
+			embed,
+			reply,
 		};
 
 		console.log("post\n", data);

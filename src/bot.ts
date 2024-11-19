@@ -10,21 +10,28 @@ export default async (agent: api.Agent) => {
 };
 
 const main = async (agent: Agent) => {
-	return;
 	{
 		const next = await feed(
 			agent,
 			feedUrl(
 				"https://bsky.app/profile/did:plc:z72i7hdynmk6r22z27h6tvur/feed/whats-hot",
 			),
-			//"at://did:plc:wzsilnxf24ehtmmc3gssy5bu/app.bsky.feed.generator/mentions",
 		);
 		const posts = await next(1);
 		console.log(posts);
 
-		for (const post of posts) {
-			const replyRef = post.reply!;
-			agent.post({ text: "rt", reply: replyRef });
+		for (const i of posts) {
+			console.log(i);
+			if (i.post.replyCount && i.post.replyCount > 100) {
+				await agent.instance.like(i.post.uri, i.post.cid);
+				agent.post({
+					text: "rt",
+					reply: {
+						root: { cid: i.post.cid, uri: i.post.uri },
+						parent: { cid: i.post.cid, uri: i.post.uri },
+					},
+				});
+			}
 		}
 	}
 };
