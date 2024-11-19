@@ -4,5 +4,10 @@
 	},
 	"imports": {
 		"@atproto/api": "npm:@atproto/api@*"
-	}
+	},
+	"fmt": {
+		"useTabs": true,
+		"exclude": ["README.md"]
+	},
+	"lock": false
 }
