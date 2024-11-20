@@ -8,6 +8,17 @@ import {
 
 type StrongRef = ComAtprotoRepoStrongRef.Main;
 
+export const ref = (uri: string, cid: string) => {
+	return { uri, cid };
+};
+
+export const reply = (ref: StrongRef) => {
+	return {
+		root: ref,
+		parent: ref,
+	};
+};
+
 export default class {
 	instance: Agent;
 	did;

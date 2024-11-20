@@ -1,5 +1,5 @@
-import Agent from "./wrap/agent.ts";
-import feed, { feedUrl } from "./wrap/feed.ts";
+import Agent, { ref, reply } from "@/wrap/agent.ts";
+import feed, { feedUrl } from "@/wrap/feed.ts";
 import * as api from "@atproto/api";
 
 export default async (agent: api.Agent) => {
@@ -10,28 +10,30 @@ export default async (agent: api.Agent) => {
 };
 
 const main = async (agent: Agent) => {
-	{
-		const next = await feed(
-			agent,
-			feedUrl(
-				"https://bsky.app/profile/did:plc:z72i7hdynmk6r22z27h6tvur/feed/whats-hot",
-			),
-		);
+	const next = await feed(
+		agent,
+		feedUrl(
+			"https://bsky.app/profile/did:plc:z72i7hdynmk6r22z27h6tvur/feed/whats-hot",
+		),
+	);
+
+	let i = 0;
+	const loop = async () => {
+		if (i > 10) return;
 		const posts = await next(1);
 		console.log(posts);
 
 		for (const i of posts) {
 			console.log(i);
-			if (i.post.replyCount && i.post.replyCount > 100) {
-				await agent.instance.like(i.post.uri, i.post.cid);
+			/*if (i.post.replyCount && i.post.replyCount > 100) {
 				agent.post({
-					text: "rt",
-					reply: {
-						root: { cid: i.post.cid, uri: i.post.uri },
-						parent: { cid: i.post.cid, uri: i.post.uri },
-					},
+					reply: reply(ref(i.post.uri, i.post.cid)),
 				});
-			}
+			}*/
 		}
-	}
+		i++;
+		await loop();
+	};
+
+	await loop();
 };

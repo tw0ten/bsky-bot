@@ -1,4 +1,4 @@
-import Agent from "./agent.ts";
+import Agent from "@/wrap/agent.ts";
 
 const generator = async (agent: Agent, url: string) => {
 	const i = await agent.instance.app.bsky.feed.getFeedGenerator({
@@ -29,7 +29,7 @@ export default async (agent: Agent, url: string) => {
 export const feedUrl = (appUrl: string) => {
 	return appUrl
 		.replace(
-			new RegExp(".*\\/profile\\/"),
+			/.*\/profile\//,
 			"at://",
 		).replace(
 			"/feed/",

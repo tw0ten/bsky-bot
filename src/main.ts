@@ -12,11 +12,8 @@ console.log("main");
 	});
 	console.log(`${credentials.did}@${credentials.serviceUrl.host}`);
 
-	try {
-		await (import("./bot.ts").then((m) => m.default(new Agent(credentials))));
-	} catch (e) {
-		console.error(e);
-	}
+	await import("@/bot.ts").then((m) => m.default(new Agent(credentials)))
+		.catch((e) => console.error(e));
 
 	console.log("logout");
 	await credentials.logout();
