@@ -1,22 +1,27 @@
+import l from "@logger";
 import secrets from "../io/o/secre.ts";
 import { Agent, CredentialSession } from "@atproto/api";
 
-console.log("main");
+l.i(">");
+l.n("main");
 
 {
 	const credentials = new CredentialSession(new URL(secrets.bluesky.service));
-	console.log("login");
+	l.i("login..");
 	await credentials.login({
 		identifier: secrets.bluesky.identifier,
 		password: secrets.bluesky.password,
 	});
-	console.log(`${credentials.did}@${credentials.serviceUrl.host}`);
+	l.i(credentials.did, credentials.serviceUrl.host);
 
-	await import("@/bot.ts").then((m) => m.default(new Agent(credentials)))
-		.catch((e) => console.error(e));
+	await import("@/bot.ts")
+		.then((m) => m.default(new Agent(credentials)))
+		.catch(l.e);
 
-	console.log("logout");
+	l.i("logout..");
 	await credentials.logout();
+	l.i(".");
 }
 
-console.log("stop");
+l.u();
+l.i("<");

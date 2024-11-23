@@ -1,12 +1,16 @@
+import l from "@logger";
 import Agent, { ref, reply } from "@/wrap/agent.ts";
 import feed, { feedUrl } from "@/wrap/feed.ts";
 import * as api from "@atproto/api";
 
 export default async (agent: api.Agent) => {
-	console.log("bot");
+	l.n("bot");
+	l.i(">");
 	const a = new Agent(agent);
+	await a.getprofile();
 	await main(a);
-	console.log("done");
+	l.i("<");
+	l.u();
 };
 
 const main = async (agent: Agent) => {
@@ -17,21 +21,13 @@ const main = async (agent: Agent) => {
 		),
 	);
 
-	let i = 0;
 	const loop = async () => {
-		if (i > 10) return;
-		const posts = await next(1);
-		console.log(posts);
+		const posts = await next(4);
 
 		for (const i of posts) {
-			console.log(i);
-			/*if (i.post.replyCount && i.post.replyCount > 100) {
-				agent.post({
-					reply: reply(ref(i.post.uri, i.post.cid)),
-				});
-			}*/
+			l.i("posts", i);
 		}
-		i++;
+
 		await loop();
 	};
 

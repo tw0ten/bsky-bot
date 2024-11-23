@@ -1,5 +1,7 @@
+import l from "@logger";
 import {
 	Agent,
+	AppBskyActorDefs,
 	AppBskyFeedPost,
 	ComAtprotoRepoStrongRef,
 	Facet,
@@ -22,17 +24,23 @@ export const reply = (ref: StrongRef) => {
 export default class {
 	instance: Agent;
 	did;
+	profile!: AppBskyActorDefs.ProfileViewDetailed;
 
 	constructor(instance: Agent) {
 		this.instance = instance;
-		this.did = this.instance.did!;
+		this.did = instance.did!;
 	}
 
-	profile = () => this.instance.getProfile({ actor: this.did });
-
-	private upload = (data: string | Uint8Array) => {
-		return this.instance.uploadBlob(data);
+	getprofile = async (did = this.did) => {
+		const p = (await this.instance.getProfile({ actor: did })).data;
+		if (did === this.did && p) {
+			this.profile = p;
+		}
+		return p;
 	};
+
+	private upload = (data: string | Uint8Array) =>
+		this.instance.uploadBlob(data);
 
 	post = async (
 		{
@@ -76,7 +84,7 @@ export default class {
 			reply,
 		};
 
-		console.log("post\n", data);
+		l.i("post", data);
 		return this.instance.post(data);
 	};
 }

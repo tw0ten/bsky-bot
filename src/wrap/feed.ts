@@ -1,10 +1,11 @@
+import l from "@logger";
 import Agent from "@/wrap/agent.ts";
 
 const generator = async (agent: Agent, url: string) => {
 	const i = await agent.instance.app.bsky.feed.getFeedGenerator({
 		feed: url,
 	});
-	console.log("getFeedGenerator\n", i);
+	l.i("feedGenerator", i);
 	return i;
 };
 
@@ -18,7 +19,7 @@ export default async (agent: Agent, url: string) => {
 			limit,
 			cursor,
 		});
-		console.log("getFeed\n", f);
+		l.i("feed", f);
 		cursor = f.data.cursor || cursor;
 		return f.data.feed;
 	};
@@ -32,7 +33,7 @@ export const feedUrl = (appUrl: string) => {
 			/.*\/profile\//,
 			"at://",
 		).replace(
-			"/feed/",
+			/\/feed\//,
 			"/app.bsky.feed.generator/",
 		);
 };

@@ -4,6 +4,7 @@
 	},
 	"imports": {
 		"@/": "./src/",
+		"@logger": "https://raw.githubusercontent.com/tw0ten/log.ts/main/mod.ts",
 		"@atproto/api": "npm:@atproto/api"
 	},
 	"fmt": {

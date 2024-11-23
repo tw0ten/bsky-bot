@@ -1,2 +1,2 @@
-# bot.bsky
+# bsky-bot
 bluesky bot
