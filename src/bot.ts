@@ -28,7 +28,7 @@ const main = async (agent: Agent) => {
 			l.i("posts", i);
 		}
 
-		await loop();
+		return loop();
 	};
 
 	await loop();

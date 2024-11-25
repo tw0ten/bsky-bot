@@ -1,7 +1,9 @@
 #!/bin/sh
 cd io
 mkdir -p o
+
 cp -u i/secre.ts o
+
 cd o
 mkdir -p log
 
