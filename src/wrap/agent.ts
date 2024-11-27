@@ -1,7 +1,8 @@
-import l from "@logger";
+import l from "l";
 import {
 	Agent,
 	AppBskyActorDefs,
+	AppBskyEmbedImages,
 	AppBskyFeedPost,
 	ComAtprotoRepoStrongRef,
 	Facet,
@@ -39,8 +40,22 @@ export default class {
 		return p;
 	};
 
-	private upload = (data: string | Uint8Array) =>
-		this.instance.uploadBlob(data);
+	upload = async (data: string | Uint8Array) =>
+		(await this.instance.uploadBlob(data)).data;
+
+	embedImages = async (
+		...i: { path: string; alt: string }[]
+	) => {
+		return {
+			"$type": "app.bsky.embed.images",
+			images: await Promise.all(i.map(async (i) => {
+				return {
+					image: (await this.upload(Deno.readFileSync(i.path))).blob,
+					alt: i.alt,
+				};
+			})),
+		};
+	};
 
 	post = async (
 		{
@@ -57,7 +72,7 @@ export default class {
 			langs?: string[];
 			tags?: string[];
 			date?: Date;
-			embed?: undefined;
+			embed?: AppBskyEmbedImages.Main;
 			reply?: {
 				root: StrongRef;
 				parent: StrongRef;

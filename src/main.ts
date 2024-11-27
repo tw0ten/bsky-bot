@@ -1,4 +1,4 @@
-import l from "@logger";
+import l from "l";
 import secrets from "../io/o/secre.ts";
 import { Agent, CredentialSession } from "@atproto/api";
 

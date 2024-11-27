@@ -1,4 +1,4 @@
-import l from "@logger";
+import l from "l";
 import Agent from "@/wrap/agent.ts";
 
 const generator = async (agent: Agent, url: string) => {

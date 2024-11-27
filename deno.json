@@ -4,8 +4,8 @@
 	},
 	"imports": {
 		"@/": "./src/",
-		"@logger": "https://raw.githubusercontent.com/tw0ten/log.ts/main/mod.ts",
-		"@atproto/api": "npm:@atproto/api"
+		"@atproto/api": "npm:@atproto/api",
+		"l": "https://raw.githubusercontent.com/tw0ten/log.ts/main/log.ts"
 	},
 	"fmt": {
 		"useTabs": true,
