@@ -1,6 +1,6 @@
 {
 	"tasks": {
-		"run": "deno run -A src/main.ts"
+		"run": "cd io && deno run -A ../src/main.ts"
 	},
 	"imports": {
 		"@/": "./src/",

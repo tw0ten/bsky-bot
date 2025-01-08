@@ -2,12 +2,8 @@
 set -e
 
 cd io
-mkdir -p o
-
+mkdir -p o o/log
 cp -u i/secre.ts o
-
-cd o
-mkdir -p log
 
 deno task run \
 	| tee 'log/0' "log/$(date +'%s')"
