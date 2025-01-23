@@ -24,7 +24,7 @@ l.i(">");
 	}
 	l.u();
 
-	await import("@/bot.ts")
+	await import("#/bot.ts")
 		.then((m) => m.default(new Agent(credentials)))
 		.catch(l.e);
 

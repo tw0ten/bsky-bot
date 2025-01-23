@@ -3,7 +3,7 @@
 		"run": "cd io && deno run -A ../src/main.ts"
 	},
 	"imports": {
-		"@/": "./src/",
+		"#/": "./src/",
 		"@atproto/api": "npm:@atproto/api",
 		"l": "https://raw.githubusercontent.com/tw0ten/lib.ts/main/log.ts"
 	},

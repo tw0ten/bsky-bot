@@ -1,5 +1,5 @@
 import l from "l";
-import Agent from "@/wrap/agent.ts";
+import Agent from "#/wrap/agent.ts";
 
 const generator = async (agent: Agent, url: string) => {
 	const i = await agent.instance.app.bsky.feed.getFeedGenerator({
@@ -20,7 +20,7 @@ export default async (agent: Agent, url: string) => {
 			cursor,
 		});
 		l.i("feed", f);
-		cursor = f.data.cursor || cursor;
+		cursor = f.data.cursor ?? cursor;
 		return f.data.feed;
 	};
 

@@ -34,9 +34,7 @@ export default class {
 
 	getprofile = async (did = this.did) => {
 		const p = (await this.instance.getProfile({ actor: did })).data;
-		if (did === this.did && p) {
-			this.profile = p;
-		}
+		if (did === this.did && p) this.profile = p;
 		return p;
 	};
 

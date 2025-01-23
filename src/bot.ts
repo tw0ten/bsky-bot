@@ -1,6 +1,6 @@
 import l from "l";
-import Agent from "@/wrap/agent.ts";
-import feed, { feedUrl } from "@/wrap/feed.ts";
+import Agent from "#/wrap/agent.ts";
+import feed, { feedUrl } from "#/wrap/feed.ts";
 import * as api from "@atproto/api";
 
 export default async (agent: api.Agent) => {
@@ -8,7 +8,8 @@ export default async (agent: api.Agent) => {
 	l.i(">");
 	const a = new Agent(agent);
 	await a.getprofile();
-	await main(a);
+	if (a.profile) await main(a);
+	else l.i("profile not loaded");
 	l.i("<");
 	l.u();
 };

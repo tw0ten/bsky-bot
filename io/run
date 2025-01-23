@@ -6,4 +6,4 @@ mkdir -p o o/log
 cp -u i/secre.ts o
 
 deno task run \
-	| tee 'log/0' "log/$(date +'%s')"
+	| tee 'o/log/0' "o/log/$(date +'%s')"
